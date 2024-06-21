@@ -1,0 +1,10 @@
+/* **************CREATED BY MISSION SHRESTHA, 2024/06/21 ****************** */
+
+INSERT INTO DW_DWH.DWH_C_PARAM (
+	PARAM_NAME
+	,PARAM_VALUE
+	)
+VALUES (
+	'CURR_DAY'
+	,CURRENT_DATE - 1
+	);
