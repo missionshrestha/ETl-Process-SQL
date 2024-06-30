@@ -15,14 +15,12 @@ VALUES
         1
     );
 
-
--- ITEM detail batch loading- JOB-ID:89
 INSERT INTO
-    ROBLING_MAY_DB.DW_DWH.DWH_C_BATCH_SCRIPTS
+    DW_DWH.DWH_C_BATCH_SCRIPTS
 VALUES
     (
-        'd_prd_itm_ld_ms',
-        'This script loads PRODUCT ITEM details',
+        'd_org_chn_ld_test',
+        'This script loads chain/brand details',
         'NTLY',
         'Nightly',
         'NA',
@@ -30,7 +28,6 @@ VALUES
             SELECT
                 MAX(JOB_ID)
             FROM
-                ROBLING_MAY_DB.DW_DWH.DWH_C_BATCH_SCRIPTS
+                DW_DWH.DWH_C_BATCH_SCRIPTS
         ) + 1
     );
- */
