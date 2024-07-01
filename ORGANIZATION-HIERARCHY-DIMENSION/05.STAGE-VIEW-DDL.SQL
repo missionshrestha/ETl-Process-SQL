@@ -131,31 +131,40 @@ SELECT
 FROM
     DW_LND.REGION S;
 
--- -- DISTRICT
--- create
--- or replace view DW_STG_V.V_STG_D_ORG_DST_LU (
---     DST_ID,
---     DST_DESC,
---     RGN_ID,
---     RMS_DST_SDESC,
---     RMS_SRC_ID,
---     RMS_LOAD_DATE
--- ) as
--- SELECT
---     CASE
---         WHEN (
---             ((UPPER(DISTRICT) || ':') || UPPER(REGION)) IS NOT NULL
---         ) THEN ((UPPER(DISTRICT) || ':') || UPPER(REGION))
---         WHEN ('0' IS NOT NULL) THEN '0'
---         ELSE NULL
---     END                                                                 AS DST_ID,
---     COALESCE(DIST_DESC, 'N/A')                                          AS DST_DESC,
---     COALESCE(REGION, '0')                                               AS RGN_ID,
---     COALESCE(DIST_DESC, 'N/A')                                          AS RMS_DST_SDESC,
---     '0'                                                                 AS RMS_SRC_ID,
---     CURRENT_DATE()                                                      AS RMS_LOAD_DATE
--- FROM
---     DW_LND.DISTRICT;
+-- DISTRICT
+create
+or replace view DW_STG_V.V_STG_D_ORG_DST_LU (
+    DST_ID,
+    DST_DESC,
+    RGN_ID,
+    RMS_Q_RGN_DNUM,
+    RMS_Q_RGN_SDESC,
+    RMS_SRC_ID,
+    RMS_LOAD_DATE
+) as
+SELECT
+    CASE
+        WHEN (
+            ((UPPER(DISTRICT) || ':') || UPPER(REGION)) IS NOT NULL
+        ) THEN ((UPPER(DISTRICT) || ':') || UPPER(REGION))
+        WHEN ('0' IS NOT NULL) THEN '0'
+        ELSE NULL
+    END                                                                 AS DST_ID,
+    COALESCE(DIST_DESC, 'N/A')                                          AS DST_DESC,
+    COALESCE(REGION, '0')                                               AS RGN_ID,
+    -- 
+    CASE
+        WHEN (
+            ((UPPER(DISTRICT) || ':') || UPPER(REGION)) IS NOT NULL
+        ) THEN ((UPPER(DISTRICT) || ':') || UPPER(REGION))
+        WHEN ('9999' IS NOT NULL) THEN '9999'
+        ELSE NULL
+    END                                                                 AS RMS_Q_RGN_DNUM,
+    COALESCE(DIST_DESC, 'N/A')                                          AS RMS_Q_RGN_SDESC,
+    '0'                                                                 AS RMS_SRC_ID,
+    CURRENT_DATE()                                                      AS RMS_LOAD_DATE
+FROM
+    DW_LND.DISTRICT;
 
 -- -- LOCATION DWH_D_ORG_LOC_LU
 -- create

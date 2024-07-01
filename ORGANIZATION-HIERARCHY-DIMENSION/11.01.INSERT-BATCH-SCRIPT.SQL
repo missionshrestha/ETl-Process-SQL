@@ -68,3 +68,21 @@ VALUES
                 DW_DWH.DWH_C_BATCH_SCRIPTS
         ) + 1
     );
+
+-- DISTRICT BATCH SCRIPT JOB-ID:5
+INSERT INTO
+    DW_DWH.DWH_C_BATCH_SCRIPTS
+VALUES
+    (
+        'd_org_dst_ld_test',
+        'This script loads DISTRICT details',
+        'NTLY',
+        'Nightly',
+        'NA',
+        (
+            SELECT
+                MAX(JOB_ID)
+            FROM
+                DW_DWH.DWH_C_BATCH_SCRIPTS
+        ) + 1
+    );
