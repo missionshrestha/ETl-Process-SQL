@@ -36,7 +36,8 @@ CREATE
 OR REPLACE VIEW DW_STG_V.V_STG_D_ORG_CHN_LU (
     CHN_ID,
     CHN_DESC,
-    RMS_CHN_SDESC,
+    RMS_BRND_DNUM,
+    RMS_BRND_SDESC,
     RMS_SRC_ID,
     RMS_LOAD_DATE 
 ) as
@@ -46,33 +47,44 @@ SELECT
         ELSE '0'
     END                                                 AS CHN_ID,
     COALESCE(S.BRAND_DESC, 'N/A')                       AS CHN_DESC,
-    COALESCE(S.BRAND_DESC, 'N/A')                       AS RMS_CHN_SDESC,
+    CASE
+        WHEN S.BRAND IS NOT NULL THEN S.BRAND
+        ELSE '9999'
+    END                                                 AS RMS_BRND_DNUM,
+    COALESCE(S.BRAND_DESC, 'N/A')                       AS RMS_BRND_SDESC,
     '0'                                                 AS RMS_SRC_ID,
     CURRENT_DATE()                                      AS RMS_LOAD_DATE 
 FROM
     DW_LND.BRAND S;
 
 
--- -- AREA
--- create
--- or replace view DW_STG_V.V_STG_D_ORG_ARA_LU_MS (
---     ARA_ID,
---     ARA_DESC,
---     RMS_ARA_SDESC,
---     RMS_SRC_ID,
---     RMS_LOAD_DATE 
--- ) as
--- SELECT
---     CASE
---         WHEN S.AREA IS NOT NULL THEN S.AREA
---         ELSE '0'
---     END                                     AS ARA_ID,
---     COALESCE(S.AREA_DESC, 'N/A')            AS ARA_DESC,
---     COALESCE(S.AREA_DESC, 'N/A')            AS RMS_ARA_SDESC,
---     '0'                                     AS RMS_SRC_ID,
---     CURRENT_DATE()                          AS RMS_LOAD_DATE 
--- FROM
---     DW_LND.AREA_MS S;
+-- AREA
+create
+or replace view DW_STG_V.V_STG_D_ORG_ARA_LU (
+    ARA_ID,
+    ARA_DESC,
+    RMS_Q_CPY_DNUM,
+    RMS_Q_CPY_SDESC,
+    RMS_SRC_ID,
+    RMS_LOAD_DATE 
+) as
+SELECT
+    CASE
+        WHEN S.AREA IS NOT NULL THEN S.AREA
+        ELSE '0'
+    END                                     AS ARA_ID,
+    COALESCE(S.AREA_DESC, 'N/A')            AS ARA_DESC,
+    -- 
+    CASE
+        WHEN S.AREA IS NOT NULL THEN S.AREA
+        ELSE '9999'
+    END                                     AS RMS_Q_CPY_DNUM,
+    
+    COALESCE(S.AREA_DESC, 'N/A')            AS RMS_Q_CPY_SDESC,
+    '0'                                     AS RMS_SRC_ID,
+    CURRENT_DATE()                          AS RMS_LOAD_DATE 
+FROM
+    DW_LND.AREA S;
 
 -- -- REGION
 -- create

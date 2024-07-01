@@ -15,12 +15,31 @@ VALUES
         1
     );
 
+-- CHAIN BATCH SCRIPT JOB-ID:2
 INSERT INTO
     DW_DWH.DWH_C_BATCH_SCRIPTS
 VALUES
     (
         'd_org_chn_ld_test',
         'This script loads chain/brand details',
+        'NTLY',
+        'Nightly',
+        'NA',
+        (
+            SELECT
+                MAX(JOB_ID)
+            FROM
+                DW_DWH.DWH_C_BATCH_SCRIPTS
+        ) + 1
+    );
+
+-- AREA BATCH SCRIPT JOB-ID:3
+INSERT INTO
+    DW_DWH.DWH_C_BATCH_SCRIPTS
+VALUES
+    (
+        'd_org_ara_ld_test',
+        'This script loads AREA details',
         'NTLY',
         'Nightly',
         'NA',
