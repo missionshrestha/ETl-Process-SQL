@@ -50,3 +50,21 @@ VALUES
                 DW_DWH.DWH_C_BATCH_SCRIPTS
         ) + 1
     );
+
+-- AREA BATCH SCRIPT JOB-ID:4
+INSERT INTO
+    DW_DWH.DWH_C_BATCH_SCRIPTS
+VALUES
+    (
+        'd_org_rgn_ld_test',
+        'This script loads REGION details',
+        'NTLY',
+        'Nightly',
+        'NA',
+        (
+            SELECT
+                MAX(JOB_ID)
+            FROM
+                DW_DWH.DWH_C_BATCH_SCRIPTS
+        ) + 1
+    );

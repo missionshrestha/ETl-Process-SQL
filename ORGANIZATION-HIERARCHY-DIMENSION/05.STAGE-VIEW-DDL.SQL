@@ -86,46 +86,54 @@ SELECT
 FROM
     DW_LND.AREA S;
 
--- -- REGION
--- create
--- or replace view DW_STG_V.V_STG_D_ORG_RGN_LU_MS (
---     RGN_ID,
---     RGN_DESC,
---     ARA_ID,
---     RMS_RGN_SDESC,
---     RMS_SRC_ID,
---     RMS_LOAD_DATE 
--- ) as
--- SELECT
---     CASE
---         WHEN S.REGION IS NOT NULL THEN S.REGION
---         WHEN '0' IS NOT NULL THEN '0'
---         ELSE NULL
---     END                                                         AS RGN_ID,
---     CASE
---         WHEN S.REGION_DESC IS NOT NULL THEN S.REGION_DESC
---         WHEN 'N/A' IS NOT NULL THEN 'N/A'
---         ELSE NULL
---     END                                                         AS RGN_DESC,
---     CASE
---         WHEN S.AREA IS NOT NULL THEN S.AREA
---         WHEN '0' IS NOT NULL THEN '0'
---         ELSE NULL
---     END                                                         AS ARA_ID,
---     CASE
---         WHEN S.REGION_DESC IS NOT NULL THEN S.REGION_DESC
---         WHEN 'N/A' IS NOT NULL THEN 'N/A'
---         ELSE NULL
---     END                                                         AS RMS_RGN_SDESC,
---     '0'                                                         AS RMS_SRC_ID,
---     CURRENT_DATE()                                              AS RMS_LOAD_DATE 
+-- REGION
+create
+or replace view DW_STG_V.V_STG_D_ORG_RGN_LU (
+    RGN_ID,
+    RGN_DESC,
+    ARA_ID,
+    RMS_Q_RGN_DNUM,
+    RMS_Q_RGN_SDESC,
+    RMS_SRC_ID,
+    RMS_LOAD_DATE 
+) as
+SELECT
+    CASE
+        WHEN S.REGION IS NOT NULL THEN S.REGION
+        WHEN '0' IS NOT NULL THEN '0'
+        ELSE NULL
+    END                                                         AS RGN_ID,
+   
+    CASE
+        WHEN S.REGION_DESC IS NOT NULL THEN S.REGION_DESC
+        WHEN 'N/A' IS NOT NULL THEN 'N/A'
+        ELSE NULL
+    END                                                         AS RGN_DESC,
+    CASE
+        WHEN S.AREA IS NOT NULL THEN S.AREA
+        WHEN '0' IS NOT NULL THEN '0'
+        ELSE NULL
+    END                                                         AS ARA_ID,
+    -- 
+    CASE
+        WHEN S.REGION IS NOT NULL THEN S.REGION
+        WHEN '9999' IS NOT NULL THEN '9999'
+        ELSE NULL
+    END                                                         AS RMS_Q_RGN_DNUM,
+    CASE
+        WHEN S.REGION_DESC IS NOT NULL THEN S.REGION_DESC
+        WHEN 'N/A' IS NOT NULL THEN 'N/A'
+        ELSE NULL
+    END                                                         AS RMS_Q_RGN_SDESC,
+    '0'                                                         AS RMS_SRC_ID,
+    CURRENT_DATE()                                              AS RMS_LOAD_DATE 
         
--- FROM
---     DW_LND.REGION_MS S;
+FROM
+    DW_LND.REGION S;
 
 -- -- DISTRICT
 -- create
--- or replace view DW_STG_V.V_STG_D_ORG_DST_LU_MS (
+-- or replace view DW_STG_V.V_STG_D_ORG_DST_LU (
 --     DST_ID,
 --     DST_DESC,
 --     RGN_ID,
@@ -147,11 +155,11 @@ FROM
 --     '0'                                                                 AS RMS_SRC_ID,
 --     CURRENT_DATE()                                                      AS RMS_LOAD_DATE
 -- FROM
---     DW_LND.DISTRICT_MS;
+--     DW_LND.DISTRICT;
 
 -- -- LOCATION DWH_D_ORG_LOC_LU
 -- create
--- or replace view DW_STG_V.V_STG_D_ORG_LOC_LU_MS (
+-- or replace view DW_STG_V.V_STG_D_ORG_LOC_LU (
 --     LOC_ID,
 --     LOC_DESC,
 --     DST_ID,
@@ -243,8 +251,8 @@ FROM
 --     -- 0 AS LOC_VAT_RGN,
 --     TOTAL_SQUARE_FT AS 
 -- FROM
---     DW_LND.GYM_LOC_EXTRACT_QS_V_MS G
---     LEFT JOIN DW_LND.STORE_FORMAT_MS S ON G.STORE_FORMAT = S.STORE_FORMAT
+--     DW_LND.GYM_LOC_EXTRACT_QS_V G
+--     LEFT JOIN DW_LND.STORE_FORMAT S ON G.STORE_FORMAT = S.STORE_FORMAT
 -- WHERE
 --     LOC_DESC <> 'zzz'
 --     AND CHN_ID IN ('NexusNova', 'DC')
@@ -286,5 +294,5 @@ FROM
 --     'Warehouse' AS LOC_TYP_CDE_DESC,
 --     VAT_REGION AS LOC_VAT_RGN,
 -- FROM
---     DW_LND.WH_MS W
---     LEFT JOIN DW_DWH_V.V_DWH_D_ORG_CHNL_LU_MS C ON W.CHANNEL_ID = C.CHNL_KEY;
+--     DW_LND.WH W
+--     LEFT JOIN DW_DWH_V.V_DWH_D_ORG_CHNL_LU C ON W.CHANNEL_ID = C.CHNL_KEY;
